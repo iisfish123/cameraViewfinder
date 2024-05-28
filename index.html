@@ -5,11 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Custom Camera Viewfinder</title>
   <style>
+    html,body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    @media screen and (orientation: portrait) {
+      body {
+        transform: rotate(90deg);
+        transform-origin: left top;
+        width: 100vh;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+      }
+    }
     #cameraViewfinder {
-      width: 300px;
-      border-radius: 100%;
-      height: auto;
-      border: 2px solid red; /* 取景框样式 */
+      width: 600px;
+      /* border-radius: 100%; */
+      height: 100%;
+      /* border: 2px solid red; */
       box-sizing: border-box;
     }
     .quan1 {
@@ -22,28 +38,18 @@
       top: 20px;
       border-radius: 100px;
     }
-    .quan2 {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      border: 1px solid yellow;
-      position: absolute;
-      left: 60vh;
-      top: 20px;
-      border-radius: 100px;
-    }
   </style>
 
 </head>
 <body>
   <video id="cameraViewfinder" autoplay playsinline></video>
   <div class="quan1"></div>
-  <div class="quan2"></div>
   <button id="capture">Capture</button>
   <div id="output"></div>
 
-  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.15.1/vconsole.min.js"></script>
+  <!-- <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script> -->
+  <script src="./adapter-latest.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.15.1/vconsole.min.js"></script> -->
   <script>
     var video = document.getElementById('cameraViewfinder')
     var $output = document.getElementById('output')
@@ -61,7 +67,7 @@
 
   </script>
   <script>
-    new VConsole()
+    // new VConsole()
     // 获取相机权限并打开相机
     navigator.mediaDevices.getUserMedia({
       // audio: false,
