@@ -10,17 +10,6 @@
       margin: 0;
       padding: 0;
     }
-    @media screen and (orientation: portrait) {
-      body {
-        transform: rotate(90deg);
-        transform-origin: left top;
-        width: 100vh;
-        overflow-x: hidden;
-        position: absolute;
-        top: 100%;
-        left: 0;
-      }
-    }
     #cameraViewfinder {
       width: 600px;
       /* border-radius: 100%; */
@@ -47,12 +36,28 @@
   <video id="cameraViewfinder" autoplay playsinline></video>
   <div class="quan1"></div>
   <button id="capture">Capture</button>
+  <button id="btn">init</button>
   <div id="output"></div>
 
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <!-- <script src="./adapter-latest.js"></script> -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vConsole/3.15.1/vconsole.min.js"></script> -->
   <script>
+    function init() {
+      navigator.mediaDevices.getUserMedia({
+        // audio: false,
+        // video: {facingMode: { exact: "environment" }}
+
+        video: true
+      }).then(stream => {
+        const video = document.getElementById('cameraViewfinder');
+        video.srcObject = stream;
+        // console.log(stream)
+        video.play();
+      }).catch(error => {
+        console.error('Error accessing camera:', error);
+      });
+    }
     var video = document.getElementById('cameraViewfinder')
     var $output = document.getElementById('output')
 
@@ -67,23 +72,27 @@
       $output.prepend(img);
     })
 
+    document.getElementById('btn').addEventListener('click',()=>{
+      init()
+    })
+
   </script>
   <script>
     // new VConsole()
     // 获取相机权限并打开相机
-    navigator.mediaDevices.getUserMedia({
-      // audio: false,
-      // video: {facingMode: { exact: "environment" }}
+    // navigator.mediaDevices.getUserMedia({
+    //   // audio: false,
+    //   // video: {facingMode: { exact: "environment" }}
 
-      video: true
-    }).then(stream => {
-      const video = document.getElementById('cameraViewfinder');
-      video.srcObject = stream;
-      console.log(stream)
-      video.play();
-    }).catch(error => {
-      console.error('Error accessing camera:', error);
-    });
+    //   video: true
+    // }).then(stream => {
+    //   const video = document.getElementById('cameraViewfinder');
+    //   video.srcObject = stream;
+    //   // console.log(stream)
+    //   video.play();
+    // }).catch(error => {
+    //   console.error('Error accessing camera:', error);
+    // });
   </script>
 </body>
 </html>
